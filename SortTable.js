@@ -1,4 +1,3 @@
-
 class SortTable {
   constructor(data) {
     this.data = data; // 2D array representing the table rows and columns
