@@ -1,13 +1,18 @@
-class SortTable {
-  constructor(data) {
-    this.data = data; // 2D array representing the table rows and columns
+class SortJSON {
+  constructor(jsonData) {
+    // Initialize with JSON data
+    this.data = jsonData;
   }
 
-  // Method to sort the table by a specific column
-  sortBy(columnIndex, order = 'asc') {
+  // Method to sort the JSON by a specific field
+  sortBy(field, order = 'asc') {
     this.data.sort((a, b) => {
-      let valA = a[columnIndex];
-      let valB = b[columnIndex];
+      let valA = a[field];
+      let valB = b[field];
+
+      // Handle empty values, treat them as lowest priority
+      if (valA === '' || valA === undefined || valA === null) valA = -Infinity;
+      if (valB === '' || valB === undefined || valB === null) valB = -Infinity;
 
       // Handle numeric and string sorting
       if (!isNaN(valA) && !isNaN(valB)) {
@@ -15,6 +20,7 @@ class SortTable {
         valB = parseFloat(valB);
       }
 
+      // Sort logic
       if (order === 'asc') {
         return valA > valB ? 1 : -1;
       } else {
@@ -27,9 +33,4 @@ class SortTable {
   getSortedData() {
     return this.data;
   }
-}
-
-// Export the SortTable class so it can be used in sketches or other projects
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = SortTable;
 }
